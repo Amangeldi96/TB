@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Токтогул Реклама</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Оң тарапка жайгаштыруу */
+            padding-right: 10%;
+            background: url('bg.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                justify-content: center;
+                padding-right: 0;
+            }
+        }
+
+        /* Айнек (Glassmorphism) Карточкасы */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        0 0 40px rgba(168, 85, 247, 0.15);
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .title span {
+            display: block;
+            background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #e9d5ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            opacity: 0.85;
+        }
+
+        /* Неон Кнопка */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6),
+                        0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .download-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <h1 class="title">ТОКТОГУЛ <span>БАЗАР</span></h1>
+        <p class="subtitle">ЖАРНАМА – ӨНҮГҮҮНҮН КҮЧҮ</p>
+        
+        <a href="Токттогул Базар.apk" class="download-btn" download>
+            <svg viewBox="0 0 24 24">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+            Скачать
+        </a>
+    </div>
+
+</body>
+</html>
