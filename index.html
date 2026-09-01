@@ -507,82 +507,89 @@
         <div class="image-counter" id="imageCounter">1 / 7</div>
     </div>
 
-    <script>
-        const slider = document.getElementById('modalSlider');
-        const modal = document.getElementById('imageModal');
-        const counter = document.getElementById('imageCounter');
-        const totalSlides = document.querySelectorAll('.modal-slide').length;
-        let activeIndex = 0;
+<script>
+    const slider = document.getElementById('modalSlider');
+    const modal = document.getElementById('imageModal');
+    const counter = document.getElementById('imageCounter');
+    const slides = document.querySelectorAll('.modal-slide');
+    const totalSlides = slides.length;
+    let activeIndex = 0;
 
-        // Сактоого жана оң баскычка тыюу салуу
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.querySelectorAll('img').forEach(img => {
-            img.setAttribute('draggable', 'false');
-        });
+    // Сүрөт сактоого жана оң баскычка тыюу салуу
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', 'false');
+    });
 
-        function openModal(index) {
-            modal.style.display = 'flex';
-            activeIndex = index;
-            setTimeout(() => {
-                goToSlide(index);
-            }, 30);
+    function openModal(index) {
+        modal.style.display = 'flex';
+        activeIndex = index;
+        updateCounter(index + 1);
+        
+        // Модалдык айнек ачылганда керектүү сүрөткө туура которуу
+        setTimeout(() => {
+            if (slides[index]) {
+                slides[index].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+            }
+        }, 50);
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function scrollSlide(direction) {
+        activeIndex += direction;
+
+        if (activeIndex < 0) activeIndex = totalSlides - 1;
+        if (activeIndex >= totalSlides) activeIndex = 0;
+
+        if (slides[activeIndex]) {
+            slides[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         }
+        updateCounter(activeIndex + 1);
+    }
 
-        function closeModal() {
-            modal.style.display = 'none';
-        }
+    function updateCounter(current) {
+        counter.textContent = `${current} / ${totalSlides}`;
+    }
 
-        function goToSlide(index) {
-            const slideWidth = slider.clientWidth;
-            slider.scrollTo({
-                left: slideWidth * index,
-                behavior: 'smooth'
-            });
-            activeIndex = index;
-            updateCounter(index + 1);
-        }
+    // IntersectionObserver — сүрөт экранга толугу менен чыкканда счетчикти КӨЗ ИРМЕМДЕ алмаштырат
+    const observerOptions = {
+        root: slider,
+        threshold: 0.6 // Сүрөттүн 60% көрүнгөндө дароо сан алмашат
+    };
 
-        function scrollSlide(direction) {
-            let nextIndex = activeIndex + direction;
-
-            if (nextIndex < 0) nextIndex = totalSlides - 1;
-            if (nextIndex >= totalSlides) nextIndex = 0;
-
-            goToSlide(nextIndex);
-        }
-
-        function updateCounter(current) {
-            counter.textContent = `${current} / ${totalSlides}`;
-        }
-
-        // Жылдыруу (Скролл) окуясы
-        slider.addEventListener('scroll', () => {
-            const slideWidth = slider.clientWidth;
-            if (slideWidth > 0) {
-                const currentIndex = Math.round(slider.scrollLeft / slideWidth);
-                if (currentIndex >= 0 && currentIndex < totalSlides) {
-                    activeIndex = currentIndex;
-                    updateCounter(currentIndex + 1);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = Array.from(slides).indexOf(entry.target);
+                if (index !== -1) {
+                    activeIndex = index;
+                    updateCounter(index + 1);
                 }
             }
         });
+    }, observerOptions);
 
-        // Жебелер аркылуу башкаруу
-        document.addEventListener('keydown', (e) => {
-            if (modal.style.display === 'flex') {
-                if (e.key === 'ArrowLeft') scrollSlide(-1);
-                if (e.key === 'ArrowRight') scrollSlide(1);
-                if (e.key === 'Escape') closeModal();
-            }
-        });
+    slides.forEach(slide => observer.observe(slide));
 
-        // Сыртты басканда жабуу
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal || e.target.classList.contains('modal-main-container')) {
-                closeModal();
-            }
-        });
-    </script>
+    // Кнопкаларды (Стрелка/Esc) башкаруу
+    document.addEventListener('keydown', (e) => {
+        if (modal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') scrollSlide(-1);
+            if (e.key === 'ArrowRight') scrollSlide(1);
+            if (e.key === 'Escape') closeModal();
+        }
+    });
+
+    // Сыртты басканда жабуу
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.classList.contains('modal-main-container')) {
+            closeModal();
+        }
+    });
+</script>
 
 </body>
 </html>
