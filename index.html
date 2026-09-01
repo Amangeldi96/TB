@@ -620,7 +620,7 @@
         devOkBtn.addEventListener('click', closeDevAlert);
     }
 
-    // Сүрөттөр слайдерин башкаруу
+// Сүрөттөр слайдерин башкаруу
     function openModal(index) {
         modal.style.display = 'flex';
         activeIndex = index;
@@ -628,4 +628,79 @@
         
         setTimeout(() => {
             if (slides[index]) {
-                slides[index].scrollIntoV
+                slides[index].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+            }
+        }, 50);
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function scrollSlide(direction) {
+        activeIndex += direction;
+
+        if (activeIndex < 0) activeIndex = totalSlides - 1;
+        if (activeIndex >= totalSlides) activeIndex = 0;
+
+        if (slides[activeIndex]) {
+            slides[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
+        updateCounter(activeIndex + 1);
+    }
+
+    function updateCounter(current) {
+        counter.textContent = `${current} / ${totalSlides}`;
+    }
+
+    const observerOptions = {
+        root: slider,
+        threshold: 0.6
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = Array.from(slides).indexOf(entry.target);
+                if (index !== -1) {
+                    activeIndex = index;
+                    updateCounter(index + 1);
+                }
+            }
+        });
+    }, observerOptions);
+
+    slides.forEach(slide => observer.observe(slide));
+
+    // Баскычтар (Esc) аркылуу жабуу
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+            closeDevAlert();
+        }
+        if (modal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') scrollSlide(-1);
+            if (e.key === 'ArrowRight') scrollSlide(1);
+        }
+    });
+
+    // Фонду басканда жабуу
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('modal-main-container')) {
+                closeModal();
+            }
+        });
+    }
+
+    if (devModal) {
+        devModal.addEventListener('click', (e) => {
+            if (e.target === devModal) {
+                closeDevAlert();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
