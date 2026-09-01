@@ -10,15 +10,18 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* ПКда: Сол жакта лого, оң жакта карточка */
+            justify-content: space-between;
             padding: 40px 8%;
-            /* НЕГИЗГИ ФОН (302225.png) */
             background: url('Fon.png') no-repeat center center fixed;
             background-size: cover;
             color: #ffffff;
@@ -26,7 +29,6 @@
             position: relative;
         }
 
-        /* ПК Версиядагы Сол жактагы Бөлөк Логотип (302226.png) */
         .brand-logo-container {
             flex: 1;
             display: flex;
@@ -41,9 +43,9 @@
             height: auto;
             filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             animation: floatGlow 4s ease-in-out infinite alternate;
+            pointer-events: none;
         }
 
-        /* Логотиптин жеңил сүзүү жана жарык берүү анимациясы */
         @keyframes floatGlow {
             0% {
                 transform: translateY(0);
@@ -55,16 +57,15 @@
             }
         }
 
-        /* Мобилдик версияда гана көрүнүүчү логотип */
         .mobile-logo {
             display: none;
             width: 110px;
             height: auto;
             margin: 0 auto 15px auto;
             filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
+            pointer-events: none;
         }
 
-        /* Премиум Айнек (Glassmorphism) Карточкасы */
         .glass-card {
             background: rgba(22, 10, 40, 0.45);
             backdrop-filter: blur(20px);
@@ -111,7 +112,6 @@
             font-weight: 600;
         }
 
-        /* Версия Бейджи */
         .version-badge {
             display: inline-flex;
             align-items: center;
@@ -128,7 +128,6 @@
             box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
         }
 
-        /* Скриншоттор галереясы */
         .gallery-container {
             margin-bottom: 24px;
         }
@@ -172,6 +171,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .screenshot-item:hover {
@@ -184,9 +184,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
         }
 
-        /* Неон Айнек Кнопка */
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -218,9 +218,9 @@
             width: 22px;
             height: 22px;
             fill: #ffffff;
+            pointer-events: none;
         }
 
-        /* МОДАЛДЫК ГАЛЕРЕЯ (Айнек слайдер) */
         .modal {
             display: none;
             position: fixed;
@@ -279,10 +279,9 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
                         0 0 40px rgba(168, 85, 247, 0.4);
             object-fit: contain;
-            user-select: none;
+            pointer-events: none;
         }
 
-        /* СҮРӨТТҮН СЫРТЫНДАГЫ СТРЕЛКАЛАР */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -314,6 +313,7 @@
             width: 28px;
             height: 28px;
             fill: #ffffff;
+            pointer-events: none;
         }
 
         .prev-btn { left: 15px; }
@@ -357,7 +357,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* МОБИЛДИК ТЕЛЕФОНДОРГО ЫЛАЙЫКТАШТЫРУУ */
         @media (max-width: 950px) {
             body {
                 flex-direction: column;
@@ -465,6 +464,12 @@
         const counter = document.getElementById('imageCounter');
         const totalSlides = document.querySelectorAll('.modal-slide').length;
 
+        // Сүрөттөрдү оң баскыч же сүйрөп көчүрүүдөн коргоо
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+            img.addEventListener('contextmenu', e => e.preventDefault());
+        });
+
         function openModal(index) {
             modal.style.display = 'flex';
             setTimeout(() => {
@@ -500,7 +505,6 @@
             counter.textContent = `${current} / ${totalSlides}`;
         }
 
-        // Скролл/Свайп окуясын байкоо (номерди өзгөртүү үчүн)
         slider.addEventListener('scroll', () => {
             const slideWidth = slider.clientWidth;
             const currentIndex = Math.round(slider.scrollLeft / slideWidth) + 1;
@@ -509,7 +513,6 @@
             }
         });
 
-        // Жебелер (Клавиатура) аркылуу башкаруу
         document.addEventListener('keydown', (e) => {
             if (modal.style.display === 'flex') {
                 if (e.key === 'ArrowLeft') scrollSlide(-1);
@@ -518,7 +521,6 @@
             }
         });
 
-        // Сыртты чыкылдатканда жабуу
         modal.addEventListener('click', (e) => {
             if (e.target === modal || e.target.classList.contains('modal-main-container')) {
                 closeModal();
@@ -527,5 +529,4 @@
     </script>
 
 </body>
-    </html>
-    
+</html>
