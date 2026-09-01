@@ -63,6 +63,7 @@
             pointer-events: none;
         }
 
+        /* КАРТОЧКА */
         .glass-card {
             background: rgba(22, 10, 40, 0.85);
             backdrop-filter: blur(20px);
@@ -77,8 +78,9 @@
             text-align: center;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7),
                         0 0 50px rgba(168, 85, 247, 0.3);
-            position: relative;
+            position: relative; /* Бурчка жылдыруу үчүн милдеттүү */
             z-index: 2;
+            margin-top: 20px;
         }
 
         .title {
@@ -108,27 +110,30 @@
             font-weight: 600;
         }
 
-        /* ГЛАЗОК (УНИКАЛДУУ КӨРҮҮЧҮЛӨРДҮН САНЫ) */
+        /* ГЛАЗОКТУ БУРЧКА ЖАЙГАШТЫРУУ */
         .views-counter {
+            position: absolute;
+            top: -14px;        /* Блоктун сыртына чыгып, жогорку бурчка такалат */
+            right: 24px;       /* Оң жаккы четинен аралык */
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            background: rgba(168, 85, 247, 0.15);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            padding: 6px 16px;
+            gap: 6px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 6px 14px;
             border-radius: 20px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #e9d5ff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.5);
+            z-index: 10;
         }
 
         .views-counter svg {
-            width: 18px;
-            height: 18px;
-            fill: #c084fc;
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
         }
 
         .version-badge {
@@ -382,6 +387,7 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(168, 85, 247, 0.4);
+            position: relative;
         }
 
         .dev-icon {
@@ -462,12 +468,7 @@
     </div>
 
     <div class="glass-card">
-        <img src="Logo.png" alt="T5 Логотип" class="mobile-logo">
-
-        <h1 class="title">ТОКТОГУЛ <span>БАЗАР</span></h1>
-        <p class="subtitle">ЖАРНАМА – ӨНҮГҮҮНҮН КҮЧҮ</p>
-        
-        <!-- КӨРҮҮЧҮЛӨРДҮН САНЫ (ГЛАЗОК) -->
+        <!-- ГЛАЗОК КАРТОЧКАНЫН ЭҢ ЖОГОРКУ ОҢ БУРЧУНА КОЮЛДУ -->
         <div class="views-counter">
             <svg viewBox="0 0 24 24">
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
@@ -475,7 +476,11 @@
             <span id="view-count">...</span>
         </div>
 
-        <br>
+        <img src="Logo.png" alt="T5 Логотип" class="mobile-logo">
+
+        <h1 class="title">ТОКТОГУЛ <span>БАЗАР</span></h1>
+        <p class="subtitle">ЖАРНАМА – ӨНҮГҮҮНҮН КҮЧҮ</p>
+        
         <div class="version-badge">Версия: 1.0.0</div>
 
         <div class="gallery-container">
@@ -567,24 +572,22 @@
 
   const viewsRef = ref(database, 'unique_page_views');
 
-  // Эгер бул телефон/браузер биринчи жолу ачып жатса гана сан кошулат
   if (!localStorage.getItem('has_visited_toktogul_bazar')) {
     runTransaction(viewsRef, (currentViews) => {
       return (currentViews || 0) + 1;
     }).then(() => {
-      // Көрүлгөндүгүн эстеп калуу
       localStorage.setItem('has_visited_toktogul_bazar', 'true');
     }).catch(error => {
       console.error("Firebase катасы:", error);
     });
   }
 
-  // Ар дайым учурдагы жалпы уникалдуу сан көрсөтүлөт
   onValue(viewsRef, (snapshot) => {
     const count = snapshot.val();
     document.getElementById('view-count').innerText = count ? count : 1;
   });
 </script>
+
 <script>
     function openDevAlert() {
         document.getElementById('devModal').style.display = 'flex';
@@ -647,7 +650,6 @@
 
     slides.forEach(slide => observer.observe(slide));
 
-    // Фонду басканда жабуу
     document.getElementById('devModal').addEventListener('click', function(e) {
         if (e.target === this) closeDevAlert();
     });
