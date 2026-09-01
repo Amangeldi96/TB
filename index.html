@@ -2,7 +2,7 @@
 <html lang="ky">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Токтогул Базар</title>
     <style>
         * {
@@ -10,10 +10,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -22,7 +19,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 40px 8%;
-            background: url('Fon.png') no-repeat center center fixed;
+            background: #0f051d url('Fon.png') no-repeat center center fixed;
             background-size: cover;
             color: #ffffff;
             overflow-x: hidden;
@@ -67,7 +64,7 @@
         }
 
         .glass-card {
-            background: rgba(22, 10, 40, 0.45);
+            background: rgba(22, 10, 40, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(216, 180, 254, 0.25);
@@ -79,8 +76,7 @@
             max-width: 440px;
             text-align: center;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7),
-                        0 0 50px rgba(168, 85, 247, 0.3),
-                        inset 0 0 20px rgba(255, 255, 255, 0.05);
+                        0 0 50px rgba(168, 85, 247, 0.3);
             position: relative;
             z-index: 2;
         }
@@ -110,6 +106,29 @@
             margin-bottom: 12px;
             opacity: 0.9;
             font-weight: 600;
+        }
+
+        /* ГЛАЗОК (УНИКАЛДУУ КӨРҮҮЧҮЛӨРДҮН САНЫ) */
+        .views-counter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #e9d5ff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .views-counter svg {
+            width: 18px;
+            height: 18px;
+            fill: #c084fc;
         }
 
         .version-badge {
@@ -168,16 +187,14 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.4);
             position: relative;
         }
 
-        .screenshot-item:hover {
-            transform: translateY(-4px) scale(1.03);
-            border-color: #c084fc;
-            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.5);
+        .screenshot-item:active {
+            transform: scale(0.95);
         }
 
         .screenshot-item img {
@@ -189,7 +206,7 @@
         }
 
         .download-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
@@ -198,23 +215,19 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: #ffffff;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(107, 33, 168, 0.95) 100%);
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.5),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
             cursor: pointer;
             outline: none;
-            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 10;
         }
 
-        .download-btn:hover, .download-btn:active {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.95) 0%, rgba(126, 34, 206, 1) 100%);
-            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.7),
-                        0 0 25px rgba(168, 85, 247, 0.5);
+        .download-btn:active {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
         }
 
         .download-btn svg {
@@ -233,9 +246,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(8, 3, 18, 0.92);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(8, 3, 18, 0.95);
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -249,34 +260,29 @@
             width: 100%;
             max-width: 1000px;
             height: 80vh;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .close-btn {
             position: fixed;
-            top: 25px;
-            right: 25px;
-            width: 52px;
-            height: 52px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999999;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             outline: none;
-            padding: 0;
         }
 
         .close-btn svg {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             fill: #ffffff;
             pointer-events: none;
         }
@@ -304,60 +310,52 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none;
         }
 
         .modal-slide img {
             max-width: 90%;
             max-height: 75vh;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
-                        0 0 40px rgba(168, 85, 247, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             object-fit: contain;
-            pointer-events: none;
         }
 
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #ffffff;
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
             z-index: 1000;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
         .nav-btn svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             fill: #ffffff;
             pointer-events: none;
         }
 
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
+        .prev-btn { left: 5px; }
+        .next-btn { right: 5px; }
 
         .image-counter {
             margin-top: 15px;
             color: #e9d5ff;
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
+            font-size: 0.9rem;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 22px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 18px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* "ИШТЕП ЧЫГУУДА" МОДАЛДЫК ТЕРЕЗЕСИ */
@@ -367,92 +365,72 @@
             z-index: 9999999;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
             width: 100%;
             height: 100%;
-            background: rgba(8, 3, 18, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 2, 12, 0.9);
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
 
-        .dev-modal.active {
-            display: flex !important;
-        }
-
         .dev-card {
-            background: rgba(26, 11, 46, 0.95);
-            border: 1px solid rgba(192, 132, 252, 0.5);
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 28px;
-            padding: 32px 24px;
-            max-width: 380px;
+            background: #18092e;
+            border: 1px solid #a855f7;
+            border-radius: 24px;
+            padding: 28px 20px;
+            max-width: 340px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9),
-                        0 0 50px rgba(168, 85, 247, 0.5);
-            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0.7); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(168, 85, 247, 0.4);
         }
 
         .dev-icon {
-            width: 68px;
-            height: 68px;
-            margin: 0 auto 16px auto;
-            background: rgba(168, 85, 247, 0.25);
-            border: 1px solid rgba(192, 132, 252, 0.5);
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 14px auto;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid #c084fc;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
         }
 
         .dev-icon svg {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             fill: #d8b4fe;
         }
 
         .dev-title {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
 
         .dev-desc {
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             color: #e9d5ff;
-            line-height: 1.5;
-            margin-bottom: 24px;
-            opacity: 0.95;
+            line-height: 1.4;
+            margin-bottom: 20px;
         }
 
         .dev-ok-btn {
             width: 100%;
-            padding: 14px;
-            font-size: 1rem;
+            padding: 12px;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #ffffff;
-            background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 16px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 14px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.5);
             outline: none;
         }
 
         .dev-ok-btn:active {
-            transform: scale(0.98);
+            background: #7c3aed;
         }
 
         @media (max-width: 950px) {
@@ -471,25 +449,8 @@
             }
 
             .glass-card {
-                padding: 30px 18px;
+                padding: 28px 18px;
                 max-width: 100%;
-            }
-
-            .modal-main-container {
-                padding: 0 5px;
-            }
-
-            .nav-btn {
-                width: 46px;
-                height: 46px;
-                background: rgba(0, 0, 0, 0.6);
-            }
-
-            .close-btn {
-                top: 15px;
-                right: 15px;
-                width: 44px;
-                height: 44px;
             }
         }
     </style>
@@ -506,23 +467,31 @@
         <h1 class="title">ТОКТОГУЛ <span>БАЗАР</span></h1>
         <p class="subtitle">ЖАРНАМА – ӨНҮГҮҮНҮН КҮЧҮ</p>
         
+        <!-- КӨРҮҮЧҮЛӨРДҮН САНЫ (ГЛАЗОК) -->
+        <div class="views-counter">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            </svg>
+            <span id="view-count">...</span>
+        </div>
+
+        <br>
         <div class="version-badge">Версия: 1.0.0</div>
 
         <div class="gallery-container">
             <div class="gallery-title">Тиркеменин скриншоттору:</div>
             <div class="screenshots-scroll">
-                <div class="screenshot-item" onclick="openModal(0)"><img src="img1.jpg" alt="Скриншот 1"></div>
-                <div class="screenshot-item" onclick="openModal(1)"><img src="img2.jpg" alt="Скриншот 2"></div>
-                <div class="screenshot-item" onclick="openModal(2)"><img src="img3.jpg" alt="Скриншот 3"></div>
-                <div class="screenshot-item" onclick="openModal(3)"><img src="img4.jpg" alt="Скриншот 4"></div>
-                <div class="screenshot-item" onclick="openModal(4)"><img src="img5.jpg" alt="Скриншот 5"></div>
-                <div class="screenshot-item" onclick="openModal(5)"><img src="img6.jpg" alt="Скриншот 6"></div>
-                <div class="screenshot-item" onclick="openModal(6)"><img src="img7.jpg" alt="Скриншот 7"></div>
+                <div class="screenshot-item" onclick="openModal(0)"><img src="img1.jpg" alt="1"></div>
+                <div class="screenshot-item" onclick="openModal(1)"><img src="img2.jpg" alt="2"></div>
+                <div class="screenshot-item" onclick="openModal(2)"><img src="img3.jpg" alt="3"></div>
+                <div class="screenshot-item" onclick="openModal(3)"><img src="img4.jpg" alt="4"></div>
+                <div class="screenshot-item" onclick="openModal(4)"><img src="img5.jpg" alt="5"></div>
+                <div class="screenshot-item" onclick="openModal(5)"><img src="img6.jpg" alt="6"></div>
+                <div class="screenshot-item" onclick="openModal(6)"><img src="img7.jpg" alt="7"></div>
             </div>
         </div>
         
-        <!-- СКАЧАТЬ БАСКЫЧЫ -->
-        <button type="button" id="downloadBtn" class="download-btn">
+        <button type="button" class="download-btn" onclick="openDevAlert()">
             <svg viewBox="0 0 24 24">
                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
             </svg>
@@ -530,9 +499,9 @@
         </button>
     </div>
 
-    <!-- ТИРКЕМЕНИ КӨРҮҮ МОДАЛДЫК СЛАЙДЕР -->
+    <!-- СЛАЙДЕР МОДАЛЫ -->
     <div class="modal" id="imageModal">
-        <button type="button" class="close-btn" onclick="closeModal()" aria-label="Жабуу">
+        <button type="button" class="close-btn" onclick="closeModal()">
             <svg viewBox="0 0 24 24">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             </svg>
@@ -561,7 +530,7 @@
         <div class="image-counter" id="imageCounter">1 / 7</div>
     </div>
 
-    <!-- "УЧУРДА ИШТЕП ЧЫГУУДА" МОДАЛДЫК ТЕРЕЗЕСИ -->
+    <!-- В РАЗРАБОТКЕ МОДАЛЫ -->
     <div class="dev-modal" id="devModal">
         <div class="dev-card">
             <div class="dev-icon">
@@ -571,15 +540,59 @@
             </div>
             <h2 class="dev-title">Учурда иштеп чыгууда</h2>
             <p class="dev-desc">Тиркеме активдүү даярдалууда жана жакынкы арада жүктөөгө даяр болот.</p>
-            <button type="button" class="dev-ok-btn" id="devOkBtn">Түшүнүктүү</button>
+            <button type="button" class="dev-ok-btn" onclick="closeDevAlert()">Түшүнүктүү</button>
         </div>
     </div>
 
+<!-- FIREBASE СКРИПТ (УНИКАЛДУУ КӨРҮҮЧҮЛӨРҮ МЕНЕН) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA0XNjDbTnlw-KVtjUqLRmn9V4gncSkYmY",
+    authDomain: "test2-4b9cc.firebaseapp.com",
+    projectId: "test2-4b9cc",
+    storageBucket: "test2-4b9cc.firebasestorage.app",
+    messagingSenderId: "854440471746",
+    appId: "1:854440471746:web:038015aca56f69bf10df5b",
+    measurementId: "G-K6M4H74LFN",
+    databaseURL: "https://test2-4b9cc-default-rtdb.firebaseio.com"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const database = getDatabase(app);
+
+  const viewsRef = ref(database, 'unique_page_views');
+
+  // Эгер бул телефон/браузер биринчи жолу ачып жатса гана сан кошулат
+  if (!localStorage.getItem('has_visited_toktogul_bazar')) {
+    runTransaction(viewsRef, (currentViews) => {
+      return (currentViews || 0) + 1;
+    }).then(() => {
+      // Көрүлгөндүгүн эстеп калуу
+      localStorage.setItem('has_visited_toktogul_bazar', 'true');
+    }).catch(error => {
+      console.error("Firebase катасы:", error);
+    });
+  }
+
+  // Ар дайым учурдагы жалпы уникалдуу сан көрсөтүлөт
+  onValue(viewsRef, (snapshot) => {
+    const count = snapshot.val();
+    document.getElementById('view-count').innerText = count ? count : 1;
+  });
+</script>
 <script>
-    // Элементтерди алуу
-    const downloadBtn = document.getElementById('downloadBtn');
-    const devModal = document.getElementById('devModal');
-    const devOkBtn = document.getElementById('devOkBtn');
+    function openDevAlert() {
+        document.getElementById('devModal').style.display = 'flex';
+    }
+
+    function closeDevAlert() {
+        document.getElementById('devModal').style.display = 'none';
+    }
 
     const slider = document.getElementById('modalSlider');
     const modal = document.getElementById('imageModal');
@@ -588,39 +601,6 @@
     const totalSlides = slides.length;
     let activeIndex = 0;
 
-    // Сүрөттү көчүрүүгө тыюу салуу
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.querySelectorAll('img').forEach(img => {
-        img.setAttribute('draggable', 'false');
-    });
-
-    // "СКАЧАТЬ" БАСКЫЧЫН БАШКАРУУ (100% Кепилдик)
-    function openDevAlert(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        if (devModal) {
-            devModal.classList.add('active');
-        } else {
-            alert('Тиркеме учурда иштеп чыгуу баскычында!');
-        }
-    }
-
-    function closeDevAlert() {
-        if (devModal) {
-            devModal.classList.remove('active');
-        }
-    }
-
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', openDevAlert);
-    }
-    if (devOkBtn) {
-        devOkBtn.addEventListener('click', closeDevAlert);
-    }
-
-// Сүрөттөр слайдерин башкаруу
     function openModal(index) {
         modal.style.display = 'flex';
         activeIndex = index;
@@ -653,11 +633,6 @@
         counter.textContent = `${current} / ${totalSlides}`;
     }
 
-    const observerOptions = {
-        root: slider,
-        threshold: 0.6
-    };
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -668,38 +643,18 @@
                 }
             }
         });
-    }, observerOptions);
+    }, { root: slider, threshold: 0.6 });
 
     slides.forEach(slide => observer.observe(slide));
 
-    // Баскычтар (Esc) аркылуу жабуу
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeModal();
-            closeDevAlert();
-        }
-        if (modal.style.display === 'flex') {
-            if (e.key === 'ArrowLeft') scrollSlide(-1);
-            if (e.key === 'ArrowRight') scrollSlide(1);
-        }
+    // Фонду басканда жабуу
+    document.getElementById('devModal').addEventListener('click', function(e) {
+        if (e.target === this) closeDevAlert();
     });
 
-    // Фонду басканда жабуу
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal || e.target.classList.contains('modal-main-container')) {
-                closeModal();
-            }
-        });
-    }
-
-    if (devModal) {
-        devModal.addEventListener('click', (e) => {
-            if (e.target === devModal) {
-                closeDevAlert();
-            }
-        });
-    }
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+        if (e.target === this || e.target.classList.contains('modal-main-container')) closeModal();
+    });
 </script>
 
 </body>
