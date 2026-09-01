@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Токтогул Базар</title>
     <style>
-        /* Текстти жана элементтерди выделение кылдырбоо */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +43,7 @@
             height: auto;
             filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             animation: floatGlow 4s ease-in-out infinite alternate;
-            pointer-events: none; /* Сүрөттү тарттырбоо / сүйрөтпөө */
+            pointer-events: none;
         }
 
         @keyframes floatGlow {
@@ -186,6 +185,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            pointer-events: none;
         }
 
         .download-btn {
@@ -222,6 +222,7 @@
             pointer-events: none;
         }
 
+        /* МОДАЛДЫК СЛАЙДЕР ЖАНА ЖАКШЫРТЫЛГАН КНОПКАЛАР */
         .modal {
             display: none;
             position: fixed;
@@ -230,7 +231,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(8, 3, 18, 0.9);
+            background: rgba(8, 3, 18, 0.92);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             justify-content: center;
@@ -244,19 +245,48 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            max-width: 1100px;
-            padding: 0 90px;
+            max-width: 1000px;
+            height: 80vh;
+            padding: 0 20px;
+        }
+
+        /* Ыңгайлуу жабуу баскычы (X) */
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            z-index: 999999;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.8);
+            border-color: #f87171;
+            transform: scale(1.1) rotate(90deg);
         }
 
         .modal-slider {
             display: flex;
-            gap: 40px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
             width: 100%;
-            max-height: 80vh;
-            padding: 20px 0;
+            height: 100%;
+            align-items: center;
             scrollbar-width: none;
         }
 
@@ -266,28 +296,32 @@
 
         .modal-slide {
             flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
             scroll-snap-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
+            pointer-events: none;
         }
 
         .modal-slide img {
-            max-width: 100%;
+            max-width: 90%;
             max-height: 75vh;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
                         0 0 40px rgba(168, 85, 247, 0.4);
             object-fit: contain;
+            pointer-events: none;
         }
 
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(15px);
             color: #ffffff;
             width: 60px;
@@ -298,14 +332,14 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            z-index: 100;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
         .nav-btn:hover {
-            background: rgba(168, 85, 247, 0.5);
+            background: rgba(168, 85, 247, 0.7);
             border-color: #d8b4fe;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
             transform: translateY(-50%) scale(1.1);
         }
 
@@ -316,45 +350,19 @@
             pointer-events: none;
         }
 
-        .prev-btn { left: 15px; }
-        .next-btn { right: 15px; }
-
-        .close-btn {
-            position: absolute;
-            top: 25px;
-            right: 35px;
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 26px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 101;
-        }
-
-        .close-btn:hover {
-            background: rgba(239, 68, 68, 0.5);
-            border-color: #f87171;
-            transform: rotate(90deg);
-        }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
 
         .image-counter {
-            margin-top: 10px;
+            margin-top: 15px;
             color: #e9d5ff;
             font-size: 0.95rem;
             letter-spacing: 1.5px;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 6px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 22px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 950px) {
@@ -378,21 +386,21 @@
             }
 
             .modal-main-container {
-                padding: 0 10px;
+                padding: 0 5px;
             }
 
             .nav-btn {
-                width: 44px;
-                height: 44px;
+                width: 46px;
+                height: 46px;
                 background: rgba(0, 0, 0, 0.6);
             }
-
-            .prev-btn { left: 5px; }
-            .next-btn { right: 5px; }
 
             .close-btn {
                 top: 15px;
                 right: 15px;
+                width: 46px;
+                height: 46px;
+                font-size: 26px;
             }
         }
     </style>
@@ -414,7 +422,6 @@
         <div class="gallery-container">
             <div class="gallery-title">Тиркеменин скриншоттору:</div>
             <div class="screenshots-scroll">
-                <!-- onclick карточкага берилди, ошондуктан ачылбай калуу көйгөйү чечилет -->
                 <div class="screenshot-item" onclick="openModal(0)"><img src="img1.jpg" alt="Скриншот 1"></div>
                 <div class="screenshot-item" onclick="openModal(1)"><img src="img2.jpg" alt="Скриншот 2"></div>
                 <div class="screenshot-item" onclick="openModal(2)"><img src="img3.jpg" alt="Скриншот 3"></div>
@@ -464,8 +471,9 @@
         const modal = document.getElementById('imageModal');
         const counter = document.getElementById('imageCounter');
         const totalSlides = document.querySelectorAll('.modal-slide').length;
+        let activeIndex = 0;
 
-        // Сүрөттөрдү сактоого, оң баскычты чыкылдатууга жана сүйрөп көчүрүүгө тыюу салуу
+        // Сактоого жана оң баскычка тыюу салуу
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.querySelectorAll('img').forEach(img => {
             img.setAttribute('draggable', 'false');
@@ -473,9 +481,10 @@
 
         function openModal(index) {
             modal.style.display = 'flex';
+            activeIndex = index;
             setTimeout(() => {
                 goToSlide(index);
-            }, 50);
+            }, 30);
         }
 
         function closeModal() {
@@ -488,13 +497,12 @@
                 left: slideWidth * index,
                 behavior: 'smooth'
             });
+            activeIndex = index;
             updateCounter(index + 1);
         }
 
         function scrollSlide(direction) {
-            const slideWidth = slider.clientWidth;
-            const currentIndex = Math.round(slider.scrollLeft / slideWidth);
-            let nextIndex = currentIndex + direction;
+            let nextIndex = activeIndex + direction;
 
             if (nextIndex < 0) nextIndex = totalSlides - 1;
             if (nextIndex >= totalSlides) nextIndex = 0;
@@ -506,14 +514,19 @@
             counter.textContent = `${current} / ${totalSlides}`;
         }
 
+        // Жылдыруу (Скролл) окуясы
         slider.addEventListener('scroll', () => {
             const slideWidth = slider.clientWidth;
-            const currentIndex = Math.round(slider.scrollLeft / slideWidth) + 1;
-            if (currentIndex >= 1 && currentIndex <= totalSlides) {
-                updateCounter(currentIndex);
+            if (slideWidth > 0) {
+                const currentIndex = Math.round(slider.scrollLeft / slideWidth);
+                if (currentIndex >= 0 && currentIndex < totalSlides) {
+                    activeIndex = currentIndex;
+                    updateCounter(currentIndex + 1);
+                }
             }
         });
 
+        // Жебелер аркылуу башкаруу
         document.addEventListener('keydown', (e) => {
             if (modal.style.display === 'flex') {
                 if (e.key === 'ArrowLeft') scrollSlide(-1);
@@ -522,6 +535,7 @@
             }
         });
 
+        // Сыртты басканда жабуу
         modal.addEventListener('click', (e) => {
             if (e.target === modal || e.target.classList.contains('modal-main-container')) {
                 closeModal();
